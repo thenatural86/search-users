@@ -8,7 +8,7 @@ const UserInfo = () => {
   // access pieces of context via useContext hook and passing in the GithubContext
   const data = React.useContext(GithubContext)
   console.log(data)
-  return <h2>user info component : {data}</h2>
+  return <h2>user info component</h2>
 }
 
 const Wrapper = styled.section`

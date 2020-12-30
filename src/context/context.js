@@ -11,8 +11,14 @@ const GithubContext = React.createContext()
 
 // separate component that contains state and functional logic for entire app. Returns GithubContext.Provider
 const GithubProvider = ({ children }) => {
+  const [githubUser, setGithubUser] = useState(mockUser)
+  const [repos, setRepos] = useState(mockRepos)
+  const [followers, setFollowers] = useState(mockFollowers)
+
   return (
-    <GithubContext.Provider value={'yolo'}>{children}</GithubContext.Provider>
+    <GithubContext.Provider value={{ githubUser, repos, followers }}>
+      {children}
+    </GithubContext.Provider>
   )
 }
 
