@@ -41,7 +41,6 @@ const UserInfo = () => {
       color: 'yellow',
     },
   ]
-
   // iterate over array nd render a Item component
   return (
     <section className='section'>
