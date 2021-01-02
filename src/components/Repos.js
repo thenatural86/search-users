@@ -5,13 +5,10 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts'
 
 const Repos = () => {
   const { repos } = React.useContext(GithubContext)
-  // console.log(repos)
 
   // params: total and exact iteration callback function and return an object
   const languages = repos.reduce(
     (total, item) => {
-      // console.log(item)
-      // console.log(total)
       const { language, stargazers_count } = item
       // if language is null return
       if (!language) return total
@@ -32,14 +29,12 @@ const Repos = () => {
     // return an object
     {}
   )
-  // console.log(languages)
   // returns an array of the languages object with its properties values, then sort and slice
   const mostUsed = Object.values(languages)
     .sort((a, b) => {
       return b.value - a.value
     })
     .slice(0, 5)
-  // console.log(languages)
 
   // most stars per lang
   const mostPopular = Object.values(languages)
@@ -50,29 +45,29 @@ const Repos = () => {
       return { ...item, value: item.stars }
     })
     .slice(0, 5)
-  // console.log(mostPopular)
 
-  const chartData = [
-    {
-      label: 'poop',
-      value: '290',
+  // stars and forks
+  let { stars, forks } = repos.reduce(
+    (total, item) => {
+      const { stargazers_count, forks, name } = item
+      // dynamically create the stargazers_count property
+      total.stars[stargazers_count] = { label: name, value: stargazers_count }
+      total.forks[forks] = { label: name, value: forks }
+      return total
     },
-    {
-      label: 'Saudi',
-      value: '260',
-    },
-    {
-      label: 'Canada',
-      value: '180',
-    },
-  ]
+    { stars: {}, forks: {} }
+  )
+  // console.log(stars)
+  stars = Object.values(stars).slice(-5).reverse()
+  forks = Object.values(forks).slice(-5).reverse()
+
   return (
     <section className='section'>
       <Wrapper className='section-center'>
         <Pie3D data={mostUsed} />
-        <Column3D data={chartData} />
+        <Column3D data={stars} />
         <Doughnut2D data={mostPopular} />
-        <Bar3D data={chartData} />
+        <Bar3D data={forks} />
       </Wrapper>
     </section>
   )
