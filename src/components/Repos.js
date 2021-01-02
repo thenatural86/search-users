@@ -58,7 +58,7 @@ const Repos = () => {
     // return an object that has two properties, stars and forks, which are objects themselves
     { stars: {}, forks: {} }
   )
-  console.log(stars)
+  // console.log(stars)
   // turn into an array instead of obj. Get the last 5 which are the 5 biggest and then reverse so the biggest is displayed first
   stars = Object.values(stars).slice(-5).reverse()
   forks = Object.values(forks).slice(-5).reverse()
