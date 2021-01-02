@@ -8,21 +8,22 @@ const Repos = () => {
   // console.log(repos)
 
   // params: total and exact iteration callback function and return an object
-  let languages = repos.reduce(
+  const languages = repos.reduce(
     (total, item) => {
       // console.log(item)
       // console.log(total)
-      const { language } = item
+      const { language, stargazers_count } = item
       // if language is null return
       if (!language) return total
       // if the property does not exist create it and set it's value to 1
       if (!total[language]) {
-        total[language] = { label: language, value: 1 }
+        total[language] = { label: language, value: 1, stars: stargazers_count }
       } else {
         // otherwise make a copy of the object and set the value property to its previous value + 1
         total[language] = {
           ...total[language],
           value: total[language].value + 1,
+          stars: total[language].stars + stargazers_count,
         }
       }
       // return the total, which is an object made up of each item
@@ -33,12 +34,23 @@ const Repos = () => {
   )
   // console.log(languages)
   // returns an array of the languages object with its properties values, then sort and slice
-  languages = Object.values(languages)
+  const mostUsed = Object.values(languages)
     .sort((a, b) => {
       return b.value - a.value
     })
     .slice(0, 5)
   // console.log(languages)
+
+  // most stars per lang
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return b.stars - a.stars
+    })
+    .map((item) => {
+      return { ...item, value: item.stars }
+    })
+    .slice(0, 5)
+  // console.log(mostPopular)
 
   const chartData = [
     {
@@ -57,9 +69,9 @@ const Repos = () => {
   return (
     <section className='section'>
       <Wrapper className='section-center'>
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsed} />
         <div></div>
-        <Doughnut2D data={chartData} />
+        <Doughnut2D data={mostPopular} />
       </Wrapper>
     </section>
   )
