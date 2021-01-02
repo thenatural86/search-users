@@ -50,14 +50,16 @@ const Repos = () => {
   let { stars, forks } = repos.reduce(
     (total, item) => {
       const { stargazers_count, forks, name } = item
-      // dynamically create the stargazers_count property
+      // dynamically create the stargazers_count property on the stars object, which is a int. In that stargazers_count property on the stars obj, give it a label property with a value of name and a value property with a value of stargazers_count, which is a int.
       total.stars[stargazers_count] = { label: name, value: stargazers_count }
       total.forks[forks] = { label: name, value: forks }
       return total
     },
+    // return an object that has two properties, stars and forks, which are objects themselves
     { stars: {}, forks: {} }
   )
-
+  console.log(stars)
+  // turn into an array instead of obj. Get the last 5 which are the 5 biggest and then reverse so the biggest is displayed first
   stars = Object.values(stars).slice(-5).reverse()
   forks = Object.values(forks).slice(-5).reverse()
 
