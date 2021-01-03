@@ -16,13 +16,13 @@ const GithubProvider = ({ children }) => {
   const [followers, setFollowers] = useState(mockFollowers)
   // request, loading
   const [request, setRequest] = useState(0)
-  const [loading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   // error
   const [error, setError] = useState({ show: false, msg: '' })
 
   const searchGithubUser = async (user) => {
     toggleError()
-    // setLoading
+    setIsLoading(true)
     const response = await axios(`${rootUrl}/users/${user}`).catch((err) =>
       console.log(err)
     )
@@ -32,6 +32,8 @@ const GithubProvider = ({ children }) => {
     } else {
       toggleError(true, 'there is no user with that username')
     }
+    checkRequest()
+    setIsLoading(false)
   }
 
   const checkRequest = () => {
@@ -55,14 +57,24 @@ const GithubProvider = ({ children }) => {
   }
 
   useEffect(checkRequest, [])
+
+  // Provider
   return (
     <GithubContext.Provider
-      value={{ githubUser, repos, followers, request, error, searchGithubUser }}
+      value={{
+        githubUser,
+        repos,
+        followers,
+        request,
+        error,
+        searchGithubUser,
+        isLoading,
+      }}
     >
       {children}
     </GithubContext.Provider>
   )
 }
 
-// export the GithubProvider, which Provides access to context to whole app, and GithubContext which is used in compents to grab the piece of context that we want in a specific component
+// export the GithubProvider, which Provides access to context to whole app, and GithubContext which is used in components to grab the piece of context that we want in a specific component
 export { GithubProvider, GithubContext }
