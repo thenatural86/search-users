@@ -27,19 +27,22 @@ const GithubProvider = ({ children }) => {
       console.log(err)
     )
     if (response) {
-      console.log(response)
       setGithubUser(response.data)
       const { login, followers_url } = response.data
-      // repos
-      // https://api.github.com/users/thenatural86/repos?per_page=100
-      axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) =>
-        setRepos(response.data)
-      )
-      // followers
-      // https://api.github.com/users/thenatural86/followers
-      axios(`${followers_url}?per_page=100`).then((response) =>
-        setFollowers(response.data)
-      )
+      // wait for all promised to be settled
+      await Promise.allSettled([
+        axios(`${rootUrl}/users/${login}/repos?per_page=100`),
+        axios(`${followers_url}?per_page=100`),
+      ]).then((results) => {
+        const [repos, followers] = results
+        const status = 'fulfilled'
+        if (repos.status === status) {
+          setRepos(repos.value.data)
+        }
+        if (followers.status === status) {
+          setFollowers(followers.value.data)
+        }
+      })
     } else {
       toggleError(true, 'there is no user with that username')
     }

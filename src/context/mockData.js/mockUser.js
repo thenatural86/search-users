@@ -22,7 +22,7 @@ export default {
   site_admin: false,
   name: 'Philip Smalls',
   company: ' Black Lightning 50/50',
-  blog: 'medium.com/@philip.smalls86',
+  blog: 'github.com/thenatural86',
   location: 'Brooklyn, NY',
   email: null,
   hireable: null,
