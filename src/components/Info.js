@@ -3,7 +3,6 @@ import { GithubContext } from '../context/context'
 import styled from 'styled-components'
 import { GoRepo, GoGist } from 'react-icons/go'
 import { FiUsers, FiUserPlus } from 'react-icons/fi'
-import { items } from 'fusioncharts'
 
 const UserInfo = () => {
   // access pieces of context via useContext hook and passing in the GithubContext

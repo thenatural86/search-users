@@ -9,8 +9,6 @@ const Error = () => {
       <div>
         <h1>404</h1>
         <h3>sorry the page you tried does not exist</h3>
-        {/* global className from index.css */}
-        {/* link to home */}
         <Link to='/' className='btn'>
           Back home
         </Link>
